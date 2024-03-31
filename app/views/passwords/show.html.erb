@@ -1,3 +1,12 @@
 <h1>The password</h1>
 
-<div>Url: <%= @password.url %></div>
+<%= link_to "Edit", edit_password_path %>
+
+<div>Url:</div>
+<pre><code><%= @password.url %></pre></code>
+
+<div>Username:</div>
+<pre><code><%= @password.username %></pre></code>
+
+<div>Passowrd:</div>
+<pre><code><%= @password.password %></pre></code>
