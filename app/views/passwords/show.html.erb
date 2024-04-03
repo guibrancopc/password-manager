@@ -1,12 +1,40 @@
-<h1>The password</h1>
 
-<%= link_to "Edit", edit_password_path %>
+<div class="mb-4 flex justify-between items-center">
+    <h1 class="mb-0">The password</h1>
+    <div class="flex justify-between">
+        <div style="margin-right: 24px">
+            <%= link_to "Edit", edit_password_path %>
+        </div>
+        <div>
+            <%= link_to @password.url, target: "_blank" do %>
+                <span>Open</span>
+                <svg style="display: inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                </svg>
+            <% end %>
+        </div>
+    </div>
+</div>
 
 <div>Url:</div>
 <pre><code><%= @password.url %></pre></code>
 
 <div>Username:</div>
-<pre><code><%= @password.username %></pre></code>
+<div style="position: relative">
+    <pre><code><%= @password.username %></pre></code>
+    <div style="position: absolute; right: 14px; top: 9px; color: #e5e7eb;">
+        <%= button_tag "Copy", data: { controller: "clipboard", action: "click->clipboard#copy",  clipboard_content_value: @password.username } %>
+    </div>
+</div>
 
-<div>Passowrd:</div>
-<pre><code><%= @password.password %></pre></code>
+<div>Password:</div>
+<div style="position: relative">
+    <pre><code><%= @password.password %></pre></code>
+    <div style="position: absolute; right: 14px; top: 9px; color: #e5e7eb;">
+        <%= button_tag "Copy", data: { controller: "clipboard", action: "click->clipboard#copy",  clipboard_content_value: @password.password } %>
+    </div>
+</div>
+
+<div>
+    < <%= link_to "Home", passwords_path %>
+</div>
