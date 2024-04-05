@@ -3,6 +3,9 @@
     <h1 class="mb-0">The password</h1>
     <div class="flex justify-between">
         <div style="margin-right: 24px">
+            <%= link_to "Share", new_password_share_path(@password) %>
+        </div>
+        <div style="margin-right: 24px">
             <%= link_to "Edit", edit_password_path %>
         </div>
         <div>
@@ -35,6 +38,22 @@
     </div>
 </div>
 
+<h2>Shared with Users</h2>
 <div>
-    < <%= link_to "Home", passwords_path %>
+    <% if (@password.users.size <= 1) %>
+        <span>No one yet!</span>
+    <% end %>
+    <% @password.users.excluding(current_user).each do |user| %>
+    <div class="flex justify-between">
+        <div><%= user.email %></div>
+        <%= button_to "Remove", password_share_path(@password, user), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+    </div>
+    <% end %>
+</div>
+
+<br>
+<br>
+
+<div>
+    <%= link_to "← Home", root_path %>
 </div>
