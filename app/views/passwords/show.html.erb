@@ -43,11 +43,17 @@
     <% if (@password.users.size <= 1) %>
         <span>No one yet!</span>
     <% end %>
-    <% @password.users.excluding(current_user).each do |user| %>
-    <div class="flex justify-between">
-        <div><%= user.email %></div>
-        <%= button_to "Remove", password_share_path(@password, user), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
-    </div>
+
+    <% @password.user_passwords.each do |user_password| %>
+        <div class="flex justify-between">
+            <div><%= user_password.user.email %></div>
+            <div><%= user_password.role.titleize %></div>
+            <div>
+                <% if (user_password.user != current_user) %>
+                    <%= button_to "Remove", password_share_path(@password, user_password.user), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+                <% end %>
+            </div>
+        </div>
     <% end %>
 </div>
 

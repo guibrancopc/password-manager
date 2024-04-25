@@ -18,7 +18,7 @@ class PasswordsController < ApplicationController
         # if @password.persisted?
 
         @password = Password.new(password_params)
-        @password.user_passwords.new(user: current_user)
+        @password.user_passwords.new(user: current_user, role: :owner)
 
         if @password.save
             redirect_to @password

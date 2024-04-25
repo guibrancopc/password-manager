@@ -8,4 +8,9 @@ class Password < ApplicationRecord
     validates :url, presence: true
     validates :username, presence: true
     validates :password, presence: true
+
+    def shareable_users
+        User.excluding(users)
+    end
 end
+ 
