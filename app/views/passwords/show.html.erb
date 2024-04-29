@@ -3,10 +3,10 @@
     <h1 class="mb-0">The password</h1>
     <div class="flex justify-between">
         <div style="margin-right: 24px">
-            <%= link_to "Share", new_password_share_path(@password) %>
+            <%= link_to "Share", new_password_share_path(@password) if @password.shareable_by(current_user) %>
         </div>
         <div style="margin-right: 24px">
-            <%= link_to "Edit", edit_password_path %>
+            <%= link_to "Edit", edit_password_path(@password) if @password.editable_by(current_user) %>
         </div>
         <div>
             <%= link_to @password.url, target: "_blank" do %>
@@ -39,21 +39,20 @@
 </div>
 
 <h2>Shared with Users</h2>
-<div>
-    <% if (@password.users.size <= 1) %>
-        <span>No one yet!</span>
-    <% end %>
-
+<div class="divide-y divide-gray-100">
     <% @password.user_passwords.each do |user_password| %>
         <div class="flex justify-between">
             <div><%= user_password.user.email %></div>
             <div><%= user_password.role.titleize %></div>
             <div>
                 <% if (user_password.user != current_user) %>
-                    <%= button_to "Remove", password_share_path(@password, user_password.user), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+                    <%= button_to "Remove", password_share_path(@password, user_password.user), method: :delete, data: { turbo_confirm: "Are you sure?" } if @password.shareable_by(current_user) %>
                 <% end %>
             </div>
         </div>
+    <% end %>
+    <% if (@password.users.size <= 1) %>
+        <span>No one yet!</span>
     <% end %>
 </div>
 
