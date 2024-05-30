@@ -25,4 +25,3 @@ class Password < ApplicationRecord
         user_passwords.find_by(user: user)&.deletable?
     end
 end
- 

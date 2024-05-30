@@ -3,7 +3,7 @@ class UserPassword < ApplicationRecord
   # Editor: can update password
   # Viewer: can only view the password
 
-  ROLES = %w{viewer owner editor}
+  ROLES = %w{viewer editor owner}
 
   belongs_to :user
   belongs_to :password
