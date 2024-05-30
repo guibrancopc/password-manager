@@ -1,8 +1,8 @@
 class PasswordsController < ApplicationController
     before_action :authenticate_user!
     before_action :set_password, except: [:index, :new, :create]
-    before_action :require_editor_permissions, only: [:edit, :update]
-    before_action :require_owner_permissions, only: [:destroy]
+    before_action :require_editor_permission, only: [:edit, :update]
+    before_action :require_deletable_permission, only: [:destroy]
 
 
     def index
@@ -54,13 +54,14 @@ class PasswordsController < ApplicationController
 
     def set_password
         @password = current_user.passwords.find(params[:id])
+        @user_password = current_user.user_passwords.find_by(password: @password)
     end
 
-    def require_editor_permissions
-        redirect_to @password unless @password.editable_by(current_user)
+    def require_editor_permission
+        redirect_to @password unless @user_password.editable?
     end
 
-    def require_owner_permissions
-        redirect_to @password unless @password.editable_by(current_user)
+    def require_deletable_permission
+        redirect_to @password unless @user_password.deletable?
     end
 end

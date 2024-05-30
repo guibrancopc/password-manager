@@ -3,10 +3,10 @@
     <h1 class="mb-0">The password</h1>
     <div class="flex justify-between">
         <div style="margin-right: 24px">
-            <%= link_to "Share", new_password_share_path(@password) if @password.shareable_by(current_user) %>
+            <%= link_to "Share", new_password_share_path(@password) if @user_password.shareable? %>
         </div>
         <div style="margin-right: 24px">
-            <%= link_to "Edit", edit_password_path(@password) if @password.editable_by(current_user) %>
+            <%= link_to "Edit", edit_password_path(@password) if @user_password.editable? %>
         </div>
         <div>
             <%= link_to @password.url, target: "_blank" do %>
@@ -46,7 +46,7 @@
             <div><%= user_password.role.titleize %></div>
             <div>
                 <% if (user_password.user != current_user) %>
-                    <%= button_to "Remove", password_share_path(@password, user_password.user), method: :delete, data: { turbo_confirm: "Are you sure?" } if @password.shareable_by(current_user) %>
+                    <%= button_to "Remove", password_share_path(@password, user_password.user), method: :delete, data: { turbo_confirm: "Are you sure?" } if @user_password.shareable? %>
                 <% end %>
             </div>
         </div>
