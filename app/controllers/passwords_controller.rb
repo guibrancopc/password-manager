@@ -54,14 +54,16 @@ class PasswordsController < ApplicationController
 
     def set_password
         @password = current_user.passwords.find(params[:id])
-        @user_password = current_user.user_passwords.find_by(password: @password)
+
+        # Below can be replaced by the helper method in application_controller.rb
+        # @user_password = current_user.user_passwords.find_by(password: @password)
     end
 
     def require_editor_permission
-        redirect_to @password unless @user_password.editable?
+        redirect_to @password unless current_user_password.editable?
     end
 
     def require_deletable_permission
-        redirect_to @password unless @user_password.deletable?
+        redirect_to @password unless current_user_password.deletable?
     end
 end

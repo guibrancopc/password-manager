@@ -1,6 +1,7 @@
 class SharesController < ApplicationController
     before_action :authenticate_user!
     before_action :set_password
+    before_action :require_shareable_permission
 
     def new
         # @users = User.where.not(id: current_user.id)
@@ -31,5 +32,12 @@ class SharesController < ApplicationController
 
     def user_password_params
         params.require(:user_password).permit(:user_id, :role)
+    end
+
+    def require_shareable_permission
+        # It works without the @ because of the helper method in application_controller.rb
+        # @user_password = current_user.user_passwords.find_by(password: @password)
+
+        redirect_to @password unless current_user_password.shareable?
     end
 end
