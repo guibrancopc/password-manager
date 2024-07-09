@@ -1,7 +1,7 @@
 
-<div class="mb-4 flex justify-between items-center">
-    <h1 class="mb-0">The password</h1>
-    <div class="flex justify-between">
+<div class="mb-4 mt-16 flex justify-between items-center">
+    <h2 class="mb-0 mt-0">The password</h2>
+    <div class="flex justify-between" >
         <div style="margin-right: 24px">
             <%= link_to "Share", new_password_share_path(@password) if current_user_password.shareable? %>
         </div>
